@@ -22,5 +22,7 @@ function parseIntent(intent){
 }
 
 function noOutcomes(){
-    return require('./charm/confused')();
+    return {
+        message: require('./charm/confused')()
+    };
 }
