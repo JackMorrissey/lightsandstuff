@@ -5,19 +5,23 @@ var color = require('../color');
 module.exports = act;
 
 function act (outcome) {
-    if(!outcome || !outcome.entities || !outcome.entities.color) {
+    if (!outcome || !outcome.entities || !outcome.entities.color) {
         var randomColor = color.random();
         return {
-            message: freeResponse(randomColor.name),
+            message: getMessage(randomColor),
             color: randomColor.hex
         };
     }
     var foundColor = color.find(outcome.entities.color[0].value);
-    if(!foundColor) {
+    if (!foundColor) {
         return undefined;
     }
     return {
-        message: requestedResponse(foundColor.name, outcome.confidence),
+        message: getMessage(foundColor.name, outcome.confidence),
         color: foundColor.hex
     };
+}
+
+function getMessage(pickedColor, confidence) {
+    return pickedColor.hex + ' ' + requestedResponse(pickedColor.name, confidence);
 }
