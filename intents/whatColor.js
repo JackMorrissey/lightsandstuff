@@ -8,7 +8,7 @@ function act (outcome) {
     if (!outcome || !outcome.entities || !outcome.entities.color) {
         var randomColor = color.random();
         return {
-            message: getMessage(randomColor),
+            message: getMessage(randomColor, freeResponse(randomColor.name)),
             color: randomColor.hex
         };
     }
@@ -17,11 +17,11 @@ function act (outcome) {
         return undefined;
     }
     return {
-        message: getMessage(foundColor.name, outcome.confidence),
+        message: getMessage(foundColor, requestedResponse(foundColor.name, outcome.confidence)),
         color: foundColor.hex
     };
 }
 
-function getMessage(pickedColor, confidence) {
-    return pickedColor.hex + ' ' + requestedResponse(pickedColor.name, confidence);
+function getMessage(pickedColor, responseText) {
+    return pickedColor.hex + ' ' + responseText;
 }
