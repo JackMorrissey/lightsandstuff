@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var main = require('./main');
+var slack = require('./slack');
 
 app.set('port', (process.env.PORT || 5000));
 // app.use(express.static(__dirname + '/public'));
@@ -21,6 +22,8 @@ app.post('/api', function(request, response) {
         });
     });
 });
+
+app.post('/slack', slack);
 
 app.listen(app.get('port'), function() {
     console.log('Node app is running at localhost:' + app.get('port'));
