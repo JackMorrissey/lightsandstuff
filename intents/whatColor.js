@@ -4,8 +4,8 @@ var color = require('../color');
 
 module.exports = act;
 
-function act (outcome){
-    if(!outcome || !outcome.entities || !outcome.entities.color ){
+function act (outcome) {
+    if(!outcome || !outcome.entities || !outcome.entities.color) {
         var randomColor = color.random();
         return {
             message: freeResponse(randomColor.name),
@@ -13,6 +13,9 @@ function act (outcome){
         };
     }
     var foundColor = color.find(outcome.entities.color[0].value);
+    if(!foundColor) {
+        return undefined;
+    }
     return {
         message: requestedResponse(foundColor.name, outcome.confidence),
         color: foundColor.hex
