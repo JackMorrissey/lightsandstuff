@@ -3,7 +3,7 @@ module.exports = tryRespond;
 function tryRespond(outgoingVars, reply) {
     var incomingUrl = getIncomingUrl(outgoingVars.token);
     var shouldUseIncomingHook = !!reply.color; // we currently only use attachments for the fancy color display
-    if (!incomingUrl || shouldUseIncomingHook) {
+    if (!incomingUrl || !shouldUseIncomingHook) {
         return false;
     }
     var fullSlackResponse = {
