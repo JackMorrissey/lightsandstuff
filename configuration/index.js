@@ -1,6 +1,8 @@
 module.exports = getConfiguration;
 
 function getConfiguration(key) {
+    // try to find it in the environment variables first
+    // this is great for Heroku
     var envVariable = process.env[key];
     if (envVariable) {
         return envVariable;

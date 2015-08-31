@@ -23,5 +23,5 @@ function act (outcome) {
 }
 
 function getMessage(pickedColor, responseText) {
-    return pickedColor.hex + ' ' + responseText;
+    return responseText + ' (' + pickedColor.hex + ')';
 }
