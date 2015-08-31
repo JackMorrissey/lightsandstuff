@@ -9,13 +9,15 @@ function tryRespond(incomingVars, reply) {
         attachments: [
             {
                 text: reply.message,
-                fallback: reply.message,
-                color: reply.color
+                fallback: reply.message
             }
         ]
     };
     if (incomingVars.channel) {
         fullSlackResponse.channel = '#' + incomingVars.channel;
+    }
+    if (reply.color) {
+        fullSlackResponse.attachments[0].color = reply.color;
     }
     incomingHookResponse(incomingUrl, fullSlackResponse);
     return true;
