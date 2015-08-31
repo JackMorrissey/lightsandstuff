@@ -1,27 +1,26 @@
 module.exports = tryRespond;
 
-function tryRespond(incomingVars, reply) {
-    var incomingUrl = getIncomingUrl(incomingVars.token);
-    if (!incomingUrl) {
+function tryRespond(outgoingVars, reply) {
+    var incomingUrl = getIncomingUrl(outgoingVars.token);
+    var shouldUseIncomingHook = !!reply.color; // we currently only use attachments for the fancy color display
+    if (!incomingUrl || shouldUseIncomingHook) {
         return false;
     }
     var fullSlackResponse = {
         attachments: [
             {
                 text: reply.message,
-                fallback: reply.message
+                fallback: reply.message,
+                color: reply.color
             }
         ]
     };
-    if (incomingVars.channel) {
-        fullSlackResponse.channel = '#' + incomingVars.channel;
-    }
-    if (reply.color) {
-        fullSlackResponse.attachments[0].color = reply.color;
+    if (outgoingVars.channel_name) {
+        fullSlackResponse.channel = '#' + outgoingVars.channel_name;
     }
     incomingHookResponse(incomingUrl, fullSlackResponse);
     return true;
-};
+}
 
 function getIncomingUrl(token) {
     var configuration = require('../configuration');
